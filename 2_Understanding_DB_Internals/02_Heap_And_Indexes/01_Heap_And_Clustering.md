@@ -131,6 +131,48 @@ Index = Book index laga
 
 ---
 
+## 🎯 Heap vs Clustering
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│   WITHOUT Clustering (HEAP):   WITH Clustering:         │
+│   ┌─────┐                      ┌─────┐                 │
+│   │  7  │  ← First insert      │  1  │  ← Sorted!     │
+│   ├─────┤                      ├─────┤                 │
+│   │  1  │  ← Second insert     │  2  │  ← Sorted!     │
+│   ├─────┤     ───────►         ├─────┤                 │
+│   │  9  │  ← Third insert      │  7  │  ← Sorted!     │
+│   ├─────┤                      ├─────┤                 │
+│   │  2  │  ← Fourth insert     │  9  │  ← Sorted!     │
+│   └─────┘                      └─────┘                 │
+│   Insert order                 Value order             │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🔑 Primary Key = Clustering (Usually)
+
+```sql
+-- Without Primary Key = HEAP
+CREATE TABLE employees (
+    id INT,              -- Just a column
+    name VARCHAR(50)
+);
+
+-- With Primary Key = CLUSTERED!
+CREATE TABLE employees (
+    id INT PRIMARY KEY,  -- Data sorted by id!
+    name VARCHAR(50)
+);
+```
+
+**Note:** PostgreSQL exception - no auto clustering even with Primary Key!
+
+---
+
 ## 🌟 Key Points (Remember!)
 
 ```
@@ -138,9 +180,11 @@ Index = Book index laga
 ✅ No sorting, data random ga padutundi
 ✅ Heap Scan = All pages check = SLOW
 ✅ Use indexes to avoid heap scan
-✅ Heap scan for large tables = Performance disaster
+✅ Clustering = Data sorted by key
+✅ Primary Key usually means clustering
+✅ PostgreSQL = Exception (no auto clustering)
 ```
 
 ---
 
-## ➡️ Next: [Indexes and B-Trees](./05_Indexes_And_BTrees.md)
+## ➡️ Next: [Indexes and B-Trees](./02_Indexes_And_BTrees.md)
